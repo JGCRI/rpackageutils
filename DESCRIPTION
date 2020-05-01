@@ -1,0 +1,17 @@
+Package: rpackageutils
+Type: Package
+Title: R package utilities
+Version: 0.1.0
+Author: c(person("Chris", "Vernon", email = "chris.vernon@pnnl.gov", role = c("aut", "che")
+Maintainer: The package maintainer <chris.vernon@pnnl.gov>
+Description: This package provides utilities commonly used in R packages. For example, retrieving
+    a remote data archive.
+Depends:
+    R (>= 3.1.0)
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.1
+Suggests: 
+    testthat
