@@ -8,6 +8,9 @@ Description: This package provides utilities commonly used in R packages. For ex
     a remote data archive.
 Depends:
     R (>= 3.1.0)
+Imports:
+    logger (>= 0.1),
+    magrittr (>= 1.5)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
