@@ -7,7 +7,7 @@ Maintainer: The package maintainer <chris.vernon@pnnl.gov>
 Description: This package provides utilities commonly used in R packages. For example, retrieving
     a remote data archive.
 Depends:
-    R (>= 3.1.0)
+    R (>= 3.5.0)
 Imports:
     logger (>= 0.1),
     magrittr (>= 1.5)
