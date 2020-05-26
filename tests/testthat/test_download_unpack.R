@@ -21,17 +21,6 @@ test_that("download_unpack_zip() is successful:", {
 })
 
 
-test_that("download_file() is successful:", {
-
-  temp_dir <- tempdir()
-  temp_file <- 'test_with-header.csv'
-  data_url <- 'https://zenodo.org/record/3856417/files/test_with-header.csv?download=1'
-
-  testthat::expect_equal(download_file(data_url, temp_dir, temp_file), 0)
-
-})
-
-
 fetch_unpack_data <- function(data_directory, url_list=DATA_VERSION_URL_LIST)
 test_that("fetch_unpack_data() is successful:", {
 
