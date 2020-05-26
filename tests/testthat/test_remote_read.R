@@ -15,8 +15,7 @@ test_that("remote_read() throws errors:", {
 
 test_that("remote_read() works:", {
 
-  # TODO replacethe url with a link to a smaller data frame to cut down on how long this test takes.
-  dat <- remote_read("https://zenodo.org/record/3779281/files/rcmip-emissions-annual-means-v4-0-0.csv?download=1")
+  dat <- remote_read("https://zenodo.org/record/3856417/files/test_with-header.csv?download=1")
   testthat::expect_true(is.data.frame(dat))
 
 })
