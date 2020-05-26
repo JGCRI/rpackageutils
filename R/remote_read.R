@@ -13,7 +13,6 @@ remote_read <- function(url, ...){
 
   # Check the url input
   assertthat::assert_that(grepl('.txt|.csv', url), msg = 'this function only supports data table import for files saved as a .txt or .csv')
-  assertthat::assert_that(grepl('download=1', url), msg = 'url incorrectly formatted, it must end with "download=1"')
 
   # Read the data
   if(grepl('.csv', url)){
