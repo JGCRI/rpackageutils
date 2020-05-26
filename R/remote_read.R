@@ -1,7 +1,7 @@
 #` `remote_read.R`
 #` @description Utilities that read in remote sources of data directly into the R environment.
 
-#' Read in a file in table formate from a remote source.
+#' Read in a file in table format from a remote source.
 #'
 #' Currently this function only works with .csv and .txt files.
 #'
