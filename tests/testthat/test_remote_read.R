@@ -8,8 +8,6 @@ test_that("remote_read() throws errors:", {
 
   testthat::expect_error(remote_read('https://fakesite/test.rda?download=1'),
                          'this function only supports data table import for files saved as a .txt or .csv')
-  testthat::expect_error(remote_read('https://fakesite/test.csv'),
-                         'url incorrectly formatted, it must end with "download=1"')
 
 })
 
