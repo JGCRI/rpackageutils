@@ -21,7 +21,7 @@ remote_read <- function(url, ...){
     dat <- read.table(url(url), ...)}
 
   # Return the data frame
-  dat
+  return(dat)
 
 }
 
