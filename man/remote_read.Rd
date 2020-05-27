@@ -9,7 +9,7 @@ remote_read(url, ...)
 \arguments{
 \item{url}{character.  URL to the file to import into R, it must be write-enabled for the user.}
 
-\item{...}{additional arguments that may be passed into read.table}
+\item{...}{additional arguments that may be passed  \code{read.table}}
 }
 \description{
 Currently this function only works with .csv and .txt files.
