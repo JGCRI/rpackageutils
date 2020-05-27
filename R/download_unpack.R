@@ -27,6 +27,8 @@ download_unpack_zip <- function(data_directory, url) {
 
   # dump zipped file from memory
   unlink(temp_file)
+
+  return(0)
 }
 
 
@@ -75,6 +77,8 @@ download_file <- function(url, write_directory, fname) {
   download.file(url, write_path, method = 'auto')
 
   log_info(paste0("File download complete for '", fname, "'"))
+
+  return(0)
 }
 
 
@@ -130,4 +134,6 @@ fetch_unpack_data <- function(data_directory, url_list=DATA_VERSION_URL_LIST) {
   } else {
     download_file(file_link, data_directory, write_filename)
   }
+
+  return(0)
 }
