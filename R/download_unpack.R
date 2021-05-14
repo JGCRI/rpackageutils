@@ -20,12 +20,19 @@ download_unpack_zip <- function(data_directory, url) {
   # download zipped file from target URL
   download.file(url, temp_file, mode="wb")
 
-  # unzip file to specified directory
-  unzip(zipfile = temp_file, exdir = data_directory)
-
   # Get Folder name
   fname <- strsplit(basename(url), split = tolower(".zip"))[[1]][1]
   dirname <- paste0(data_directory,"/",fname)
+
+  # Check if Folder exists
+  if(dir.exists(dirname)){
+    print(paste0("File to download already exists: ", dirname))
+    data_directory <- paste0(data_directory,"_1")
+    print(paste0("Saving current file to :", data_directory,"/",fname))
+  }
+
+  # unzip file to specified directory
+  unzip(zipfile = temp_file, exdir = data_directory)
 
   log_info(paste0("Data extracted to ", dirname))
 
