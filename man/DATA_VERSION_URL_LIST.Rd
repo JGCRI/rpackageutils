@@ -5,7 +5,9 @@
 \alias{DATA_VERSION_URL_LIST}
 \title{A keyed list containing links to download remote data for each package version in the structure:
 list(version_1 = c(data_url_1, data_url_n), #' version_n = c(data_url_1, data_url_n))}
-\format{An object of class \code{list} of length 1.}
+\format{
+An object of class \code{list} of length 1.
+}
 \usage{
 DATA_VERSION_URL_LIST
 }

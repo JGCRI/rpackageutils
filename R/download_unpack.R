@@ -18,17 +18,21 @@ download_unpack_zip <- function(data_directory, url) {
   temp_file <- tempfile()
 
   # download zipped file from target URL
-  download.file(url, temp_file)
+  download.file(url, temp_file, mode="wb")
 
   # unzip file to specified directory
   unzip(zipfile = temp_file, exdir = data_directory)
 
-  log_info(paste0("Data extracted to ", data_directory))
+  # Get Folder name
+  fname <- strsplit(basename(url), split = tolower(".zip"))[[1]][1]
+  dirname <- paste0(data_directory,"/",fname)
+
+  log_info(paste0("Data extracted to ", dirname))
 
   # dump zipped file from memory
   unlink(temp_file)
 
-  return(0)
+  return(dirname)
 }
 
 
