@@ -14,6 +14,11 @@
 #' @export
 download_unpack_zip <- function(data_directory, url) {
 
+  # Check data directory exists
+  if(!dir.exists(data_directory)){
+    stop(paste0("data_directory: ", data_directory," provided does not exist."))
+    }
+
   # hold zipped file in memory
   temp_file <- tempfile()
 
