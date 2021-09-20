@@ -2,7 +2,7 @@
 % Please edit documentation in R/remote_read.R
 \name{remote_read}
 \alias{remote_read}
-\title{Read in a file in table formate from a remote source.}
+\title{Read in a file in table format from a remote source.}
 \usage{
 remote_read(url, ...)
 }
