@@ -9,7 +9,11 @@ smooth(
   window_length = 5,
   window_type = "historical",
   save = TRUE,
-  diagnostics = FALSE
+  diagnostics = FALSE,
+  diagnostics_n = 20,
+  diagnostics_col = NULL,
+  filename = NULL,
+  folder = NULL
 )
 }
 \arguments{
@@ -23,6 +27,14 @@ time periods up to the value being smoothed and "surround" uses time period befo
 \item{save}{Default = TRUE. Whether data should be printed as a csv or not.}
 
 \item{diagnostics}{Default = FALSE. Whether diagnostic figures should be produced.}
+
+\item{diagnostics_n}{Default = 20. Number of sub-plots in each diagnostic figure.}
+
+\item{diagnostics_col}{Default = NULL. Which column to plot diagnostics for.}
+
+\item{filename}{Default = NULL}
+
+\item{folder}{Default = NULL}
 }
 \value{
 Returns a dataframe (and csv file if save = TRUE)
