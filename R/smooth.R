@@ -67,8 +67,8 @@ smooth <- function(data=NULL,
   #...............
 
   # Convert to list if not already a list
-  if(!class(data) %in% "list"){
-    if(class(data) != "list"){
+  if(any(!class(data) %in% "list")){
+    if(any(class(data) != "list")){
       data <- list(data)
     }
   }
@@ -83,12 +83,12 @@ smooth <- function(data=NULL,
     # Check input data
     #...............
 
-    if(class(data_i) %in% c("tbl_df","tbl","data.frame")){
+    if(any(class(data_i) %in% c("tbl_df","tbl","data.frame"))){
       data_i_raw = data_i
     }
     # check if dataframe
 
-    if(class(data_i) %in% c("character")){
+    if(any(class(data_i) %in% c("character"))){
       # check if class data_i is a character
       if(file.exists(data_i)){
         data_i_raw <- data.table::fread(paste(data_i),encoding="Latin-1")%>%
@@ -176,10 +176,10 @@ smooth <- function(data=NULL,
         }
       }
       else {
-        fname_raw_i = paste0(dirx,"/",basename(filename))
+        fname_raw_i = paste0(dirx,"/smoothed_data")
       }
 
-      fname_i = paste0(gsub(".csv","",fname_raw_i),"_smooth_win",window_length,"_",window_type,".csv")
+      fname_i = paste0(gsub(".csv","",fname_raw_i),"_window",window_length,window_type,".csv")
       # file name for new .csv file
       data.table::fwrite(x=data_i_smoothed,file=fname_i)
       print(paste0("File saved as ",fname_i))
@@ -220,8 +220,8 @@ smooth <- function(data=NULL,
 
       fname_diagnostics_i = paste0(dirname(fname_raw_i),
                                    "/diagnostics/",
-                                   basename(fname_raw_i),
-                                   "_",window_length,"_",window_type,"_",i,".png");fname_diagnostics_i
+                                   basename(fname_raw_i),"_window",
+                                   window_length,window_type,"_",i,".png");fname_diagnostics_i
 
       lower_n = ((i-1)*diagnostics_n)+1; lower_n
       upper_n = (i*diagnostics_n); upper_n
