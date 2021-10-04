@@ -69,7 +69,7 @@ smooth <- function(data=NULL,
   # Convert to list if not already a list
   if(any(!class(data) %in% "list")){
     if(any(class(data) != "list")){
-      data <- list(data)
+      data <- as.list(data)
     }
   }
 
@@ -77,7 +77,7 @@ smooth <- function(data=NULL,
 
   # For testing set i = 1
   for(i in 1:length(data)){
-    data_i = data[[i]]
+    data_i = unlist(data)[i]
 
     #...............
     # Check input data

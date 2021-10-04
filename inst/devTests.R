@@ -1,7 +1,11 @@
 library(rpackageutils)
 library(dplyr)
 
-data <- "C:/Z/models/00tests/xanthosGlobalRuns/Basin_runoff_km3peryear_pm_abcd_mrtm_noresm1-m_rcp8p5_1950_2099.csv"
+data <- list("C:/Z/models/00tests/xanthosGlobalRuns/Basin_runoff_km3peryear_pm_abcd_mrtm_noresm1-m_rcp8p5_1950_2099.csv",
+             "C:/Z/models/00tests/xanthosGlobalRuns/Basin_runoff_km3peryear_pm_abcd_mrtm_noresm1-m_rcp8p5_1950_2099a.csv")
+
+setwd("C:/Z/models/00tests/xanthosGlobalRuns/")
+data <- list.files(pattern="*.csv"); data
 
 data_smoothed <- rpackageutils::smooth(data=data,
                                        window_length = 5,
