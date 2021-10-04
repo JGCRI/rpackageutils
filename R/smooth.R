@@ -231,7 +231,7 @@ smooth <- function(data=NULL,
                             ggplot2::aes(x = x, y = value, group = data)) +
         ggplot2::geom_line(ggplot2::aes(color=data)) +
         ggplot2::facet_wrap(as.formula(paste0(". ~ ",col_name)),scales="free_y") +
-        ggplot2::ggtitle(col_name) +
+        ggplot2::ggtitle(paste0(col_name," window length = ", window_length, " ", window_type)) +
         ggplot2::theme_bw() +
         ggplot2::theme(axis.text.x=ggplot2::element_text(angle=90,vjust=0.5)) +
         ggplot2::scale_x_discrete(limits=unique(data_diagnostic$x),
