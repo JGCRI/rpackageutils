@@ -162,6 +162,13 @@ smooth <- function(data=NULL,
       dplyr::rename(value=mean_val_complete); data_i_smoothed
 
     #...............
+    # Turn long format back into wide format
+    #...............
+
+    data_i_smoothed = data_i_smoothed %>%
+      tidyr::spread(key="x", value ="value")
+
+    #...............
     # Save outputs
     #...............
 
