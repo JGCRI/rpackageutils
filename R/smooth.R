@@ -12,6 +12,7 @@
 #' @param diagnostics_col Default = NULL. Which column to plot diagnostics for.
 #' @param filename Default = NULL
 #' @param folder Default = NULL
+#' @param output_type Default = "wide". Output dimensions long or wide.
 #' @importFrom magrittr %>%
 #' @return Returns a dataframe (and csv file if save = TRUE)
 #' @keywords smoothing
@@ -28,7 +29,8 @@ smooth <- function(data=NULL,
                    diagnostics_n = 20,
                    diagnostics_col = NULL,
                    filename = NULL,
-                   folder = NULL) {
+                   folder = NULL,
+                   output_type = "wide") {
 
   #For testing:
   # data  = model_smooth_total
@@ -173,8 +175,9 @@ smooth <- function(data=NULL,
     # Turn long format back into wide format
     #...............
 
+    if(grepl("wide",output_type,ignore.case = T)){
     data_i_smoothed = data_i_smoothed %>%
-      tidyr::spread(key="x", value ="value")
+      tidyr::spread(key="x", value ="value")}
 
     #...............
     # Save outputs

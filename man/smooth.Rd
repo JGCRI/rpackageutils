@@ -13,7 +13,8 @@ smooth(
   diagnostics_n = 20,
   diagnostics_col = NULL,
   filename = NULL,
-  folder = NULL
+  folder = NULL,
+  output_type = "wide"
 )
 }
 \arguments{
@@ -35,6 +36,8 @@ time periods up to the value being smoothed and "surround" uses time period befo
 \item{filename}{Default = NULL}
 
 \item{folder}{Default = NULL}
+
+\item{output_type}{Default = "wide". Output dimensions long or wide.}
 }
 \value{
 Returns a dataframe (and csv file if save = TRUE)
