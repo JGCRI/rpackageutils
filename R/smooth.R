@@ -71,7 +71,7 @@ smooth <- function(data=NULL,
 
   # Convert to list if not already a list
   if(any(!class(data) %in% "list")){
-    if(class(data) == "character" & length(data) > 0){
+    if(any(class(data) == "character") & length(data) > 0){
         data <- as.list(data)
     } else {
       data <- list(data=data)
