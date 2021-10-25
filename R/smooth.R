@@ -34,10 +34,13 @@ smooth <- function(data=NULL,
   # data  = model_smooth_total
 
   # window_length=5
-  # window_type="surround"
-  # save = TRUE
+  # window_type="historical"
+  # save = FALSE
   # diagnostics = FALSE
-  # filename = "smooth_data"
+  # diagnostics_n = 20
+  # diagnostics_col = NULL
+  # filename = NULL
+  # folder = NULL
 
   #...............
   # Initialize
@@ -68,8 +71,10 @@ smooth <- function(data=NULL,
 
   # Convert to list if not already a list
   if(any(!class(data) %in% "list")){
-    if(any(class(data) != "list")){
-      data <- as.list(data)
+    if(class(data) == "character" & length(data) > 0){
+        data <- as.list(data)
+    } else {
+      data <- list(data=data)
     }
   }
 
@@ -77,7 +82,8 @@ smooth <- function(data=NULL,
 
   # For testing set i = 1
   for(i in 1:length(data)){
-    data_i = unlist(data)[i]
+
+    data_i = data[[i]]
 
     #...............
     # Check input data
@@ -101,7 +107,7 @@ smooth <- function(data=NULL,
     # Check Data format
     #...............
 
-    # Check if data is already in long format with an x column
+    # Check if data is in wide format adn ocnvert to long
     if(!any(grepl(c("x|year"),names(data_i_raw), ignore.case = T))){
       # Check data is in long format with a x column
       if(any(!is.na(as.numeric(names(data_i_raw))))){
@@ -116,12 +122,14 @@ smooth <- function(data=NULL,
         stop("None of the columns in the data are years")
       }
     } else {
-      if(grepl("year",names(data_i_raw),ignore.case = T)){
+      if(any(grepl("year",names(data_i_raw),ignore.case = T))){
       data_i_raw <- data_i_raw %>%
-        dplyr::rename(x=year,
-                      x=Year,
-                      x=YEAR)
+        dplyr::rename_all(tolower) %>%
+        dplyr::rename("x"="year")
       }
+
+      non_numeric_cols <- names(data_i_raw)[!names(data_i_raw) %in% c("x","value")]
+
     }
 
 
@@ -194,6 +202,7 @@ smooth <- function(data=NULL,
 
     data_smoothed[[i]] = data_i_smoothed
   }
+
   #...............
   # Produce Diagnostics
   #...............
