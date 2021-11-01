@@ -7,7 +7,7 @@
 smooth(
   data = NULL,
   window_length = 5,
-  window_type = "historical",
+  window_type = "trail",
   save = TRUE,
   diagnostics = FALSE,
   diagnostics_n = 20,
@@ -22,7 +22,7 @@ smooth(
 
 \item{window_length}{Default = 5. Length of smoothing window to use in units of data time period.}
 
-\item{window_type}{Default = "historical". Can be "historical" or "surround" where historical uses
+\item{window_type}{Default = "trail". Can be "trail" or "surround" where "trail" uses
 time periods up to the value being smoothed and "surround" uses time period before and after each value being smoothed.}
 
 \item{save}{Default = TRUE. Whether data should be printed as a csv or not.}
@@ -43,7 +43,7 @@ time periods up to the value being smoothed and "surround" uses time period befo
 Returns a dataframe (and csv file if save = TRUE)
 }
 \description{
-Function to smooth data across different time windows length and position (historical or surrounding)
+Function to smooth data across different time windows length and position (trailing or surrounding)
 }
 \examples{
 library(rpackageutils)

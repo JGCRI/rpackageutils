@@ -1,10 +1,10 @@
 #' smooth
 #'
-#' Function to smooth data across different time windows length and position (historical or surrounding)
+#' Function to smooth data across different time windows length and position (trailing or surrounding)
 #'
 #' @param data Default = NULL. Input data as R dataframe or CSV
 #' @param window_length Default = 5. Length of smoothing window to use in units of data time period.
-#' @param window_type Default = "historical". Can be "historical" or "surround" where historical uses
+#' @param window_type Default = "trail". Can be "trail" or "surround" where "trail" uses
 #' time periods up to the value being smoothed and "surround" uses time period before and after each value being smoothed.
 #' @param save Default = TRUE. Whether data should be printed as a csv or not.
 #' @param diagnostics Default = FALSE. Whether diagnostic figures should be produced.
@@ -23,7 +23,7 @@
 
 smooth <- function(data=NULL,
                    window_length=5,
-                   window_type="historical",
+                   window_type="trail",
                    save = TRUE,
                    diagnostics = FALSE,
                    diagnostics_n = 20,
@@ -36,7 +36,7 @@ smooth <- function(data=NULL,
   # data  = model_smooth_total
 
   # window_length=5
-  # window_type="historical"
+  # window_type="trail"
   # save = FALSE
   # diagnostics = FALSE
   # diagnostics_n = 20
@@ -143,8 +143,8 @@ smooth <- function(data=NULL,
 
     # print(paste0("window_type = ",window_type))
 
-    # if historical:
-    if (window_type == "historical"){
+    # if trail:
+    if (window_type == "trail"){
       data_i_smoothed_raw <- data_i_raw %>%
         dplyr::group_by_at(non_numeric_cols)%>%
         dplyr::mutate(mean_value = zoo::rollmean(x = value, k = window_length, fill = NA)) %>%
