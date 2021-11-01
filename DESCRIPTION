@@ -17,6 +17,7 @@ Imports:
 	ggplot2,
 	tibble,
 	tidyr,
+	reticulate,
 	assertthat,
 	stats
 License: BSD_2_clause + file LICENSE
