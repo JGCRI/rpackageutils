@@ -236,17 +236,23 @@ append_npy <- function(files1  = NULL,
     fname <- paste0(getwd(),"/appended_file_",i,
                     "_",min_year_month,"_to_",max_year_month,".npy")
     } else {
-      if(dirname(out_filenames[i])=="."){fname_csv <- paste0("./csv/",gsub(".csv","",basename(out_filenames[i])),
-                                                             "_",min_year_month,"_to_",max_year_month,".csv")}
-      if(dirname(out_filenames[i])!="."){fname_csv <- paste0(dirname(out_filenames[i]),"_csv/",gsub(".csv","",basename(out_filenames[i])),
-                                                             "_",min_year_month,"_to_",max_year_month,".csv")}
-      fname <- out_filenames[i]
+      if(dirname(out_filenames[i])=="."){fname <- paste0("./output/",gsub(".csv","",basename(out_filenames[i])),
+                                                             "_",min_year_month,"_to_",max_year_month,".npy")
+      } else {
+        fname <- paste0(out_filenames[i],"_",min_year_month,"_to_",max_year_month,".npy")
+        }
+      if(dirname(out_filenames[i])!="."){fname_csv <- paste0("./output_csv/",gsub(".csv","",basename(out_filenames[i])),
+                                                             "_",min_year_month,"_to_",max_year_month,".csv")
+      } else {
+        fname_csv <- paste0(out_filenames[i],"_",min_year_month,"_to_",max_year_month,".csv")
+        }
     }
 
     if(!is.null(out_dir)){
       if(!dir.exists(out_dir)){
         dir.create(out_dir)
       }
+
       fname <- paste0(out_dir,"/",basename(fname))
 
       out_dir_csv <- paste0(out_dir,"_csv")
