@@ -43,6 +43,7 @@ smooth <- function(data=NULL,
   # diagnostics_col = NULL
   # filename = NULL
   # folder = NULL
+  # output_type = "wide"
 
   #...............
   # Initialize
@@ -171,6 +172,8 @@ smooth <- function(data=NULL,
       dplyr::select(-value,-mean_value)%>%
       dplyr::rename(value=mean_val_complete); data_i_smoothed
 
+    data_i_smoothed_long = data_i_smoothed
+
     #...............
     # Turn long format back into wide format
     #...............
@@ -218,7 +221,7 @@ smooth <- function(data=NULL,
 
     data_diagnostic <- data_i_raw %>%
       dplyr::mutate(data="raw") %>%
-      dplyr::bind_rows(data_i_smoothed %>%
+      dplyr::bind_rows(data_i_smoothed_long %>%
                          dplyr::mutate(data="smoothed")); data_diagnostic
 
     # Diagnostics in Groups of 50

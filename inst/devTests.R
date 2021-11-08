@@ -1,33 +1,34 @@
 library(rpackageutils)
 library(dplyr)
 
-data <- list("C:/Z/models/00tests/xanthosGlobalRuns/Basin_runoff_km3peryear_pm_abcd_mrtm_noresm1-m_rcp8p5_1950_2099.csv",
-             "C:/Z/models/00tests/xanthosGlobalRuns/Basin_runoff_km3peryear_pm_abcd_mrtm_noresm1-m_rcp8p5_1950_2099a.csv")
+setwd("C:/Z/projects/current/00_IM3/tests/xanthos_us_comb_global")
 
-data <- list.files("C:/Z/models/00tests/xanthosGlobalRuns",pattern="*.csv", full.names = T); data
-data <- data[!grepl("_window*",data)]; data
-
-data_smoothed <- rpackageutils::smooth(data=data,
-                                       window_length = 5,
-                                       window_type = "surround",
-                                       diagnostics = TRUE,
-                                       diagnostics_n = 20,
-                                       diagnostics_col = "name",
-                                       filename = NULL,
-                                       folder = NULL)
-data_smoothed
+print("Start smoothing ... ")
 
 
-df <- data.table::fread(data,header=T) %>% tibble::as_tibble(); df
-df_smoothed <- rpackageutils::smooth(data=df,
-                                     window_length = 5,
-                                     window_type = "surround",
-                                     diagnostics = TRUE,
-                                     diagnostics_n = 20,
-                                     diagnostics_col = "name",
-                                     filename = NULL,
-                                     folder = NULL)
-df_smoothed
+# Get the list of .csv files
+list <- list.files(pattern = "*_comb");
+list <- list[grepl(".csv",list)]; list
+
+model_smoothed <- rpackageutils::smooth(data=list,
+                                        window_length = 5,
+                                        window_type = "trail",
+                                        diagnostics = TRUE,
+                                        save = TRUE,
+                                        diagnostics_n = 20,
+                                        diagnostics_col = "name",
+                                        filename = NULL,
+                                        folder = NULL)
+
+data=list
+window_length = 5
+window_type = "trail"
+diagnostics = TRUE
+save = TRUE
+diagnostics_n = 20
+diagnostics_col = "name"
+filename = NULL
+folder = NULL
 
 
 #------------ LDC
