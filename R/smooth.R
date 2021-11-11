@@ -148,7 +148,7 @@ smooth <- function(data=NULL,
     if (window_type == "trail"){
       data_i_smoothed_raw <- data_i_raw %>%
         dplyr::group_by_at(non_numeric_cols)%>%
-        dplyr::mutate(mean_value = zoo::rollmean(x = value, k = window_length, fill = NA)) %>%
+        dplyr::mutate(mean_value = zoo::rollmean(x = value, k = window_length, fill = NA, align = 'right')) %>%
         dplyr::ungroup()
     }
     # adjust
@@ -157,7 +157,7 @@ smooth <- function(data=NULL,
     if(window_type == "surround"){
       data_i_smoothed_raw <- data_i_raw %>%
         dplyr::group_by_at(non_numeric_cols)%>%
-        dplyr::mutate(mean_value=zoo::rollmean(x = value,k=window_length,fill=NA)) %>%
+        dplyr::mutate(mean_value=zoo::rollmean(x = value,k=window_length,fill=NA, align = 'center')) %>%
         dplyr::ungroup()
     }
 
