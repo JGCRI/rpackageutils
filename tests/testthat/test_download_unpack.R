@@ -11,14 +11,14 @@ test_that("filename_from_url() returns expected:", {
 })
 
 
-test_that("download_unpack_zip() is successful:", {
-
-  temp_dir <- tempdir()
-  data_url <- 'https://zenodo.org/record/3856417/files/test.zip?download=1'
-
-  testthat::expect_equal(download_unpack_zip(temp_dir, data_url), 0)
-
-})
+# test_that("download_unpack_zip() is successful:", {
+#
+#   temp_dir <- tempdir()
+#   data_url <- 'https://zenodo.org/record/3856417/files/test.zip?download=1'
+#
+#   testthat::expect_equal(download_unpack_zip(temp_dir, data_url), 0)
+#
+# })
 
 
 fetch_unpack_data <- function(data_directory, url_list=DATA_VERSION_URL_LIST)
