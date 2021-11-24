@@ -13,14 +13,10 @@
 #' @param folder Default = NULL
 #' @param output_type Default = "wide". Output dimensions long or wide.
 #' @importFrom magrittr %>%
-#' @return Returns a dataframe (and csv file if save = TRUE)
 #' @keywords delta
 #' @export
-#' @examples
-#' library(rpackageutils)
 
 
-# Final function will look like this:
 delta <- function(data=NULL,
                   baseline = NULL,
                   start_year = 2015,
@@ -48,9 +44,7 @@ delta <- function(data=NULL,
   # Initialize
   #...............
 
-  # NULL -> data_i_delta -> YEAR ->  Year -> mean_val_complete -> mean_value ->
-  #  value -> x -> year
-    # assign NULL to these to avoid error warning
+  NULL -> x -> value -> value_2015
 
   data_delta <- list()
   # data_delta <- list[1]
@@ -165,7 +159,7 @@ delta <- function(data=NULL,
     if(!is.null(baseline)){
 
       if(file.exists(baseline)){
-        baseline_df <- read.csv(baseline, comment.char = "#") %>%
+        baseline_df <- utils::read.csv(baseline, comment.char = "#") %>%
           tibble::as_tibble()
         names(baseline_df) <- gsub("X","", names(baseline_df), ignore.case = TRUE)
 
@@ -303,7 +297,7 @@ delta <- function(data=NULL,
                               dplyr::filter(!!as.symbol(col_name) %in% unique(data_diagnostic[[col_name]])[lower_n:upper_n]),
                             ggplot2::aes(x = x, y = value, group = data)) +
         ggplot2::geom_line(ggplot2::aes(color=data)) +
-        ggplot2::facet_wrap(as.formula(paste0(". ~ ",col_name)),scales="free_y") +
+        ggplot2::facet_wrap(stats::as.formula(paste0(". ~ ",col_name)),scales="free_y") +
         ggplot2::ggtitle(paste0(col_name," delta ", start_year)) +
         ggplot2::theme_bw() +
         ggplot2::theme(axis.text.x=ggplot2::element_text(angle=90,vjust=0.5)) +
