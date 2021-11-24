@@ -33,16 +33,16 @@ delta <- function(data=NULL,
                   output_type = "wide") {
 
   #For testing:
-   data  = list
-   baseline = c("C:/Users/wolf184/stash/gcam-core/input/gcamdata/inst/extdata/water/xanthos_basin_runoff.csv")
-   start_year = 2015
-   save = TRUE
-   diagnostics = TRUE
-   diagnostics_n = 20
-   diagnostics_col = "name"
-   filename = NULL
-   folder = NULL
-   output_type = "wide"
+   #data  = list
+   #baseline = c("C:/Users/wolf184/stash/gcam-core/input/gcamdata/inst/extdata/water/xanthos_basin_runoff.csv")
+   #start_year = 2015
+   #save = TRUE
+   #diagnostics = TRUE
+   #diagnostics_n = 20
+   #diagnostics_col = "name"
+   #filename = NULL
+   #folder = NULL
+   #output_type = "wide"
 
   #...............
   # Initialize
