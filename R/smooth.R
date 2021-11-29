@@ -140,6 +140,17 @@ smooth <- function(data=NULL,
     # Smooth Data
     #...............
 
+    data_i_raw <- data_i_raw %>%
+      # Raw data from /pic/projects/GCAM/gcam_hydrology/runs/xanthos/pm_abcd_mrtm have incomplete basn names.
+      # Code below adjusts those
+      dplyr::mutate(name  = gsub("^Adriatic Sea - Greece - Black Se$","Adriatic Sea - Greece - Black Sea Coast",name),
+                    name  = gsub("^Africa Red Sea - Gulf of Aden Co$","Africa Red Sea - Gulf of Aden Coast",name),
+                    name  = gsub("^Northeast South America South At$","Northeast South America South Atlantic Coast",name),
+                    name  = gsub("^North Brazil South Atlantic Coas$","North Brazil South Atlantic Coast",name),
+                    name  = gsub("^Uruguay - Brazil South Atlantic$","Uruguay - Brazil South Atlantic Coast",name),
+                    name  = gsub("^North Argentina South Atlantic C$","North Argentina South Atlantic Coast",name),
+                    name  = gsub("^South Argentina South Atlantic C$","South Argentina South Atlantic Coast",name))
+
     data_i_smoothed_raw <- data_i_raw
 
     # print(paste0("window_type = ",window_type))
@@ -217,7 +228,7 @@ smooth <- function(data=NULL,
 
     print("Starting diagnostics...")
 
-    if(!dir.exists("diagnostics")){dir.create("diagnostics")}
+    if(!dir.exists("diagnostics_smooth")){dir.create("diagnostics_smooth")}
 
     data_diagnostic <- data_i_raw %>%
       dplyr::mutate(data="raw") %>%
@@ -241,7 +252,7 @@ smooth <- function(data=NULL,
     for(i in 1:groups_n){
 
       fname_diagnostics_i = paste0(dirname(fname_raw_i),
-                                   "/diagnostics/",
+                                   "/diagnostics_smooth/",
                                    basename(fname_raw_i),"_window",
                                    window_length,window_type,"_",i,".png");fname_diagnostics_i
 
