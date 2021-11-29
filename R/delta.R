@@ -243,6 +243,9 @@ delta <- function(data=NULL,
       data.table::fwrite(x=data_i_deltas,file=fname_i)
       print(paste0("File saved as ",fname_i))
 
+      baseline_df_delta_i <- baseline_df_delta_i[1:(length(baseline_df_delta_i)-1)]
+      # drop last column (<NA> column automatically introduced by R)
+
       if(!is.null(baseline)){
         fname_i = paste0(gsub(".csv","",fname_raw_i),"_delta_applied",start_year,".csv")
         # file name for new .csv file
