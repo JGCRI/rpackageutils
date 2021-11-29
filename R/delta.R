@@ -150,12 +150,12 @@ delta <- function(data=NULL,
       dplyr::filter(x >= start_year)
 
     # Check for any missing/different names between baseline and raw data and notify user
-    missing_names <- (data_i_filtered$name%>%unique())[!data_i_filtered$name%>%unique() %in% baseline_df$name%>%unique()]; missing_names
-    if(length(missing_names)>0){
-      print(paste0("WARNING: Not all the names in raw data file: ", data_i))
-      print(paste0("are present in the baseline data file", baseline))
-      print(paste0("Missing basins are: ", paste(missing_names,collapse=", ")))
-      }
+    #missing_names <- (data_i_filtered$name%>%unique())[!data_i_filtered$name%>%unique() %in% baseline_df$name%>%unique()]; missing_names
+    #if(length(missing_names)>0){
+    #  print(paste0("WARNING: Not all the names in raw data file: ", data_i))
+    #  print(paste0("are present in the baseline data file", baseline))
+    #  print(paste0("Missing basins are: ", paste(missing_names,collapse=", ")))
+    #  }
 
     data_i_deltas <- data_i_filtered %>%
       dplyr::group_by_at(dplyr::vars(dplyr::all_of(non_numeric_cols))) %>%
@@ -260,7 +260,7 @@ delta <- function(data=NULL,
       data.table::fwrite(x=data_i_deltas,file=fname_i)
       print(paste0("File saved as ",fname_i))
 
-      baseline_df_delta_i <- baseline_df_delta_i[1:(length(baseline_df_delta_i)-1)]
+      # baseline_df_delta_i <- baseline_df_delta_i[1:(length(baseline_df_delta_i)-1)]
       # drop last column (<NA> column automatically introduced by R)
 
       if(!is.null(baseline)){
