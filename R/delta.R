@@ -29,16 +29,16 @@ delta <- function(data=NULL,
                   output_type = "wide") {
 
   #For testing:
-   #data  = list
-   #baseline = c("C:/Users/wolf184/stash/gcam-core/input/gcamdata/inst/extdata/water/xanthos_basin_runoff.csv")
-   #start_year = 2015
-   #save = TRUE
-   #diagnostics = TRUE
-   #diagnostics_n = 20
-   #diagnostics_col = "name"
-   #filename = NULL
-   #folder = NULL
-   #output_type = "wide"
+   # data  = NULL
+   # baseline = NULL
+   # start_year = 2015
+   # save = TRUE
+   # diagnostics = TRUE
+   # diagnostics_n = 20
+   # diagnostics_col = "name"
+   # filename = NULL
+   # folder = NULL
+   # output_type = "wide"
 
   #...............
   # Initialize
@@ -135,10 +135,27 @@ delta <- function(data=NULL,
     # Calculate deltas
     #...............
 
+    data_i_raw <- data_i_raw %>%
+      # Raw data from /pic/projects/GCAM/gcam_hydrology/runs/xanthos/pm_abcd_mrtm have incomplete basn names.
+      # Code below adjusts those
+      dplyr::mutate(name  = gsub("^Adriatic Sea - Greece - Black Se$","Adriatic Sea - Greece - Black Sea Coast",name),
+                    name  = gsub("^Africa Red Sea - Gulf of Aden Co$","Africa Red Sea - Gulf of Aden Coast",name),
+                    name  = gsub("^Northeast South America South At$","Northeast South America South Atlantic Coast",name),
+                    name  = gsub("^North Brazil South Atlantic Coas$","North Brazil South Atlantic Coast",name),
+                    name  = gsub("^Uruguay - Brazil South Atlantic$","Uruguay - Brazil South Atlantic Coast",name),
+                    name  = gsub("^North Argentina South Atlantic C$","North Argentina South Atlantic Coast",name),
+                    name  = gsub("^South Argentina South Atlantic C$","South Argentina South Atlantic Coast",name))
+
     data_i_filtered <- data_i_raw %>%
       dplyr::filter(x >= start_year)
-      # _raw: 1950-2100 runoff by GCM for each basin
-      # _filtered: 2015-2100 runoff by GCM for each basin
+
+    # Check for any missing/different names between baseline and raw data and notify user
+    missing_names <- (data_i_filtered$name%>%unique())[!data_i_filtered$name%>%unique() %in% baseline_df$name%>%unique()]; missing_names
+    if(length(missing_names)>0){
+      print(paste0("WARNING: Not all the names in raw data file: ", data_i))
+      print(paste0("are present in the baseline data file", baseline))
+      print(paste0("Missing basins are: ", paste(missing_names,collapse=", ")))
+      }
 
     data_i_deltas <- data_i_filtered %>%
       dplyr::group_by_at(dplyr::vars(dplyr::all_of(non_numeric_cols))) %>%
@@ -265,12 +282,14 @@ delta <- function(data=NULL,
 
     print("Starting diagnostics...")
 
-    if(!dir.exists("diagnostics")){dir.create("diagnostics")}
+    if(!dir.exists("diagnostics_delta")){dir.create("diagnostics_delta")}
 
     data_diagnostic <- baseline_df %>%
-      dplyr::mutate(data="raw") %>%
+      dplyr::mutate(data="baseline") %>%
       dplyr::bind_rows(baseline_df_delta_i_long %>%
-                         dplyr::mutate(data="delta")); data_diagnostic
+                         dplyr::mutate(data="delta")) %>%
+      dplyr::bind_rows(data_i_raw %>%
+                         dplyr::mutate(data="original")); data_diagnostic
 
     # Diagnostics in Groups of 50
     if(is.null(diagnostics_col)){
@@ -289,7 +308,7 @@ delta <- function(data=NULL,
     for(i in 1:groups_n){
 
       fname_diagnostics_i = paste0(dirname(fname_raw_i),
-                                   "/diagnostics/",
+                                   "/diagnostics_delta/",
                                    basename(fname_raw_i),"_delta",
                                    start_year,"_",i,".png");fname_diagnostics_i
 

@@ -9,22 +9,12 @@ print("Start smoothing ... ")
 # Get the list of .csv files
 list <- list.files(pattern = "*_comb");
 list <- list[grepl(".csv",list)]; list
-list <- list[[1]]
+list <- list[[1]]; list
 
 model_smoothed <- rpackageutils::smooth(data=list,
-                                        window_length = 5,
+                                        window_length = 6,
                                         window_type = "trail",
-                                        diagnostics = FALSE,
-                                        save = TRUE,
-                                        diagnostics_n = 20,
-                                        diagnostics_col = "name",
-                                        filename = NULL,
-                                        folder = NULL)
-
-model_smoothed <- rpackageutils::smooth(data=list,
-                                        window_length = 5,
-                                        window_type = "surround",
-                                        diagnostics = FALSE,
+                                        diagnostics = T,
                                         save = TRUE,
                                         diagnostics_n = 20,
                                         diagnostics_col = "name",
@@ -35,6 +25,26 @@ data=list
 window_length = 5
 window_type = "trail"
 diagnostics = TRUE
+save = TRUE
+diagnostics_n = 20
+diagnostics_col = "name"
+filename = NULL
+folder = NULL
+
+model_deltas <- rpackageutils::delta(data=list,
+                                       baseline = "C:/Z/projects/current/00_IM3/tests/xanthos_us_comb_global/xanthos_basin_runoff.csv",
+                                       start_year = 2015,
+                                        diagnostics = T,
+                                        save = TRUE,
+                                        diagnostics_n = 20,
+                                        diagnostics_col = "name",
+                                        filename = NULL,
+                                        folder = NULL)
+
+data=list
+baseline = "C:/Z/projects/current/00_IM3/tests/xanthos_us_comb_global/xanthos_basin_runoff.csv"
+start_year = 2015
+diagnostics = T
 save = TRUE
 diagnostics_n = 20
 diagnostics_col = "name"
