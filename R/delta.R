@@ -17,28 +17,28 @@
 #' @export
 
 
-#delta <- function(data=NULL,
-#                  baseline = NULL,
-#                  start_year = 2015,
-#                  save = TRUE,
-#                  diagnostics = TRUE,
-#                  diagnostics_n = 20,
-#                  diagnostics_col = "name",
-#                  filename = NULL,
-#                  folder = NULL,
-#                  output_type = "wide") {
+delta <- function(data=NULL,
+                  baseline = NULL,
+                  start_year = 2015,
+                  save = TRUE,
+                  diagnostics = TRUE,
+                  diagnostics_n = 20,
+                  diagnostics_col = "name",
+                  filename = NULL,
+                  folder = NULL,
+                  output_type = "wide") {
 
   #For testing:
-  data=list[1]
-  baseline = "C:/Users/wolf184/OneDrive - PNNL/Documents/Projects/GCAM-USA-IM3/Runoff files/xanthos_basin_runoff.csv"
-  start_year = 2015
-  save = TRUE
-  diagnostics = TRUE
-  diagnostics_n = 20
-  diagnostics_col = "name"
-  filename = NULL
-  folder = NULL
-  output_type = "wide"
+#  data=list[1]
+#  baseline = "C:/Users/wolf184/OneDrive - PNNL/Documents/Projects/GCAM-USA-IM3/Runoff files/xanthos_basin_runoff.csv"
+#  start_year = 2015
+#  save = TRUE
+#  diagnostics = TRUE
+#  diagnostics_n = 20
+#  diagnostics_col = "name"
+#  filename = NULL
+#  folder = NULL
+#  output_type = "wide"
 
   #...............
   # Initialize
@@ -78,9 +78,9 @@
 
   # For each element in list
 
+   for(i in 1:length(data)){
+  # i = 1
   # For testing set i = 1
-  # for(i in 1:length(data)){
-    i = 1
     data_i = data[[i]]
 
     #...............
@@ -353,4 +353,4 @@
 
   return(data_delta)
 
-# }  # Close delta function
+ }  # Close delta function
