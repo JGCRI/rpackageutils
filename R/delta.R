@@ -29,16 +29,20 @@ delta <- function(data=NULL,
                   output_type = "wide") {
 
   #For testing:
-#  data=list[1]
-#  baseline = "C:/Users/wolf184/OneDrive - PNNL/Documents/Projects/GCAM-USA-IM3/Runoff files/xanthos_basin_runoff.csv"
-#  start_year = 2015
-#  save = TRUE
-#  diagnostics = TRUE
-#  diagnostics_n = 20
-#  diagnostics_col = "name"
-#  filename = NULL
-#  folder = NULL
-#  output_type = "wide"
+  #library(rpackageutils); library(dplyr); library(data.table); library(tibble)
+  #setwd("C:/Users/wolf184/OneDrive - PNNL/Documents/Projects/GCAM-USA-IM3/Runoff files"); getwd()
+  #list <- list.files(pattern = "*.csv")
+  #list <- list[grepl("window",list)]
+  #data=list[1]
+  #baseline = "C:/Users/wolf184/OneDrive - PNNL/Documents/Projects/GCAM-USA-IM3/Runoff files/xanthos_basin_runoff.csv"
+  #start_year = 2015
+  #save = TRUE
+  #diagnostics = TRUE
+  #diagnostics_n = 20
+  #diagnostics_col = "name"
+  #filename = NULL
+  #folder = NULL
+  #output_type = "wide"
 
   #...............
   # Initialize
@@ -78,7 +82,7 @@ delta <- function(data=NULL,
 
   # For each element in list
 
-   for(i in 1:length(data)){
+  for(i in 1:length(data)){
   # i = 1
   # For testing set i = 1
     data_i = data[[i]]
@@ -109,13 +113,10 @@ delta <- function(data=NULL,
     if(!any(grepl(c("x|year"),names(data_i_raw), ignore.case = T))){
       # Check data is in long format with a x column
       if(any(!is.na(as.numeric(names(data_i_raw))))){
-
         non_numeric_cols <- names(data_i_raw)[is.na(as.numeric(names(data_i_raw)))]
-
         # Gather into long format
         data_i_raw <- data_i_raw %>%
           tidyr::gather(key="x",value="value",-tidyselect::all_of(non_numeric_cols))
-
       } else {
         stop("None of the columns in the data are years")
       }
@@ -125,7 +126,6 @@ delta <- function(data=NULL,
           dplyr::rename_all(tolower) %>%
           dplyr::rename("x"="year")
       }
-
       non_numeric_cols <- names(data_i_raw)[!names(data_i_raw) %in% c("x","value")]
 
     }
@@ -272,9 +272,8 @@ delta <- function(data=NULL,
         print(paste0("File saved as ",fname_i))
       }
     }
-
     data_delta[[i]] = data_i_deltas
-  }
+  } # one bracket too much?
 
   #...............
   # Produce Diagnostics
@@ -351,6 +350,6 @@ delta <- function(data=NULL,
 
   print("Calculating deltas complete.")
 
-  return(data_delta)
+#  return(data_delta)
 
  }  # Close delta function
