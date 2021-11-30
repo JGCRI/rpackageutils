@@ -17,28 +17,28 @@
 #' @export
 
 
-delta <- function(data=NULL,
-                  baseline = NULL,
-                  start_year = 2015,
-                  save = TRUE,
-                  diagnostics = TRUE,
-                  diagnostics_n = 20,
-                  diagnostics_col = "name",
-                  filename = NULL,
-                  folder = NULL,
-                  output_type = "wide") {
+#delta <- function(data=NULL,
+#                  baseline = NULL,
+#                  start_year = 2015,
+#                  save = TRUE,
+#                  diagnostics = TRUE,
+#                  diagnostics_n = 20,
+#                  diagnostics_col = "name",
+#                  filename = NULL,
+#                  folder = NULL,
+#                  output_type = "wide") {
 
   #For testing:
-   # data  = NULL
-   # baseline = NULL
-   # start_year = 2015
-   # save = TRUE
-   # diagnostics = TRUE
-   # diagnostics_n = 20
-   # diagnostics_col = "name"
-   # filename = NULL
-   # folder = NULL
-   # output_type = "wide"
+  data=list[1]
+  baseline = "C:/Users/wolf184/OneDrive - PNNL/Documents/Projects/GCAM-USA-IM3/Runoff files/xanthos_basin_runoff.csv"
+  start_year = 2015
+  save = TRUE
+  diagnostics = TRUE
+  diagnostics_n = 20
+  diagnostics_col = "name"
+  filename = NULL
+  folder = NULL
+  output_type = "wide"
 
   #...............
   # Initialize
@@ -79,8 +79,8 @@ delta <- function(data=NULL,
   # For each element in list
 
   # For testing set i = 1
-  for(i in 1:length(data)){
-     #i = 1
+  # for(i in 1:length(data)){
+    i = 1
     data_i = data[[i]]
 
     #...............
@@ -114,7 +114,7 @@ delta <- function(data=NULL,
 
         # Gather into long format
         data_i_raw <- data_i_raw %>%
-          tidyr::gather(key="x",value="value",-dplyr::all_of(non_numeric_cols))
+          tidyr::gather(key="x",value="value",-tidyselect::all_of(non_numeric_cols))
 
       } else {
         stop("None of the columns in the data are years")
@@ -149,16 +149,9 @@ delta <- function(data=NULL,
     data_i_filtered <- data_i_raw %>%
       dplyr::filter(x >= start_year)
 
-    # Check for any missing/different names between baseline and raw data and notify user
-    #missing_names <- (data_i_filtered$name%>%unique())[!data_i_filtered$name%>%unique() %in% baseline_df$name%>%unique()]; missing_names
-    #if(length(missing_names)>0){
-    #  print(paste0("WARNING: Not all the names in raw data file: ", data_i))
-    #  print(paste0("are present in the baseline data file", baseline))
-    #  print(paste0("Missing basins are: ", paste(missing_names,collapse=", ")))
-    #  }
 
     data_i_deltas <- data_i_filtered %>%
-      dplyr::group_by_at(dplyr::vars(dplyr::all_of(non_numeric_cols))) %>%
+      dplyr::group_by_at(dplyr::vars(tidyselect::all_of(non_numeric_cols))) %>%
       dplyr::mutate(value_2015 = value[x=="2015"],
                     delta = value/value_2015,
                     delta = dplyr::if_else(is.na(delta),1,delta)) %>%
@@ -180,6 +173,15 @@ delta <- function(data=NULL,
           tibble::as_tibble()
         names(baseline_df) <- gsub("X","", names(baseline_df), ignore.case = TRUE)
 
+        # Check for any missing/different names between baseline and raw data and notify user
+        missing_names <- (data_i_filtered$name%>%unique())[!data_i_filtered$name%>%unique() %in% baseline_df$name%>%unique()]; missing_names
+        if(length(missing_names)>0){
+          print(paste0("WARNING: Not all the names in raw data file: ", data_i))
+          print(paste0("are present in the baseline data file", baseline))
+          print(paste0("Missing basins are: ", paste(missing_names,collapse=", ")))
+          }
+
+
         # Check if data is in wide format and convert to long
         if(!any(grepl(c("x|year"),names(baseline_df), ignore.case = T))){
           # Check data is in long format with a x column
@@ -189,7 +191,7 @@ delta <- function(data=NULL,
 
             # Gather into long format
             baseline_df <- baseline_df %>%
-              tidyr::gather(key="x",value="value",-dplyr::all_of(non_numeric_cols_baseline))
+              tidyr::gather(key="x",value="value",-tidyselect::all_of(non_numeric_cols_baseline))
 
           } else {
             stop("None of the columns in the data are years")
@@ -351,4 +353,4 @@ delta <- function(data=NULL,
 
   return(data_delta)
 
- }  # Close delta function
+# }  # Close delta function
