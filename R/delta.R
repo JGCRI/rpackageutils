@@ -4,7 +4,7 @@
 #'
 #' @param data Default = NULL. Input data as R dataframe or CSV.
 #' @param baseline Default = NULL. Baseline data to apply deltas to.
-#' @param start_year Default = 2015.
+#' @param start_year Default = 2016.
 #' @param save Default = TRUE. Whether data should be printed as a csv or not.
 #' @param diagnostics Default = FALSE. Whether diagnostic figures should be produced.
 #' @param diagnostics_n Default = 20. Number of sub-plots in each diagnostic figure.
@@ -19,7 +19,7 @@
 
 delta <- function(data=NULL,
                   baseline = NULL,
-                  start_year = 2015,
+                  start_year = 2016,
                   save = TRUE,
                   diagnostics = TRUE,
                   diagnostics_n = 20,
@@ -35,7 +35,7 @@ delta <- function(data=NULL,
   #list <- list[grepl("window",list)]
   #data=list[1]
   #baseline = "C:/Users/wolf184/OneDrive - PNNL/Documents/Projects/GCAM-USA-IM3/Runoff files/xanthos_basin_runoff.csv"
-  #start_year = 2015
+  #start_year = 2016
   #save = TRUE
   #diagnostics = TRUE
   #diagnostics_n = 20
@@ -48,7 +48,7 @@ delta <- function(data=NULL,
   # Initialize
   #...............
 
-  NULL -> x -> value -> value_2015
+  NULL -> x -> value -> value_2016
 
   data_delta <- list()
   # data_delta <- list[1]
@@ -152,11 +152,11 @@ delta <- function(data=NULL,
 
     data_i_deltas <- data_i_filtered %>%
       dplyr::group_by_at(dplyr::vars(tidyselect::all_of(non_numeric_cols))) %>%
-      dplyr::mutate(value_2015 = value[x=="2015"],
-                    delta = value/value_2015,
+      dplyr::mutate(value_2016 = value[x=="2016"],
+                    delta = value/value_2016,
                     delta = dplyr::if_else(is.na(delta),1,delta)) %>%
-      dplyr::select(-value,-value_2015); data_i_deltas
-       # _deltas: deltas as factors normalized to 2015 values for 2015-2100 runoff values by GCM for each basin
+      dplyr::select(-value,-value_2016); data_i_deltas
+       # _deltas: deltas as factors normalized to 2016 values for 2016-2100 runoff values by GCM for each basin
 
     # data_i_deltas %>% filter(id==1) %>% as.data.frame() %>% tail()
      # test: check values for only one basin
